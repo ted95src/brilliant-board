@@ -219,7 +219,12 @@ export const updateColumn = createServerFn({ method: "POST" })
     if (typeof data.accent === "string") patch["accent"] = data.accent;
     if (Object.keys(patch).length) {
       fail(
-        (await context.supabase.from("board_columns").update(patch).eq("id", data.columnId)).error,
+        (
+          await context.supabase
+            .from("board_columns")
+            .update(patch as never)
+            .eq("id", data.columnId)
+        ).error,
       );
     }
     return { ok: true };
