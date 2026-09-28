@@ -14,7 +14,316 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      board_columns: {
+        Row: {
+          accent: string
+          board_id: string
+          created_at: string
+          id: string
+          name: string
+          position: number
+          user_id: string
+        }
+        Insert: {
+          accent?: string
+          board_id: string
+          created_at?: string
+          id?: string
+          name?: string
+          position?: number
+          user_id: string
+        }
+        Update: {
+          accent?: string
+          board_id?: string
+          created_at?: string
+          id?: string
+          name?: string
+          position?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "board_columns_board_id_fkey"
+            columns: ["board_id"]
+            isOneToOne: false
+            referencedRelation: "boards"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      boards: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          position: number
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name?: string
+          position?: number
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          position?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
+      card_labels: {
+        Row: {
+          card_id: string
+          label_id: string
+          user_id: string
+        }
+        Insert: {
+          card_id: string
+          label_id: string
+          user_id: string
+        }
+        Update: {
+          card_id?: string
+          label_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "card_labels_card_id_fkey"
+            columns: ["card_id"]
+            isOneToOne: false
+            referencedRelation: "cards"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "card_labels_label_id_fkey"
+            columns: ["label_id"]
+            isOneToOne: false
+            referencedRelation: "labels"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      cards: {
+        Row: {
+          board_id: string
+          column_id: string
+          created_at: string
+          description: string
+          due_date: string | null
+          id: string
+          position: number
+          priority: Database["public"]["Enums"]["card_priority"]
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          board_id: string
+          column_id: string
+          created_at?: string
+          description?: string
+          due_date?: string | null
+          id?: string
+          position?: number
+          priority?: Database["public"]["Enums"]["card_priority"]
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          board_id?: string
+          column_id?: string
+          created_at?: string
+          description?: string
+          due_date?: string | null
+          id?: string
+          position?: number
+          priority?: Database["public"]["Enums"]["card_priority"]
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cards_board_id_fkey"
+            columns: ["board_id"]
+            isOneToOne: false
+            referencedRelation: "boards"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "cards_column_id_fkey"
+            columns: ["column_id"]
+            isOneToOne: false
+            referencedRelation: "board_columns"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      chat_messages: {
+        Row: {
+          board_id: string
+          content: string
+          created_at: string
+          id: string
+          role: string
+          user_id: string
+        }
+        Insert: {
+          board_id: string
+          content: string
+          created_at?: string
+          id?: string
+          role: string
+          user_id: string
+        }
+        Update: {
+          board_id?: string
+          content?: string
+          created_at?: string
+          id?: string
+          role?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chat_messages_board_id_fkey"
+            columns: ["board_id"]
+            isOneToOne: false
+            referencedRelation: "boards"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      checklist_items: {
+        Row: {
+          card_id: string
+          content: string
+          created_at: string
+          done: boolean
+          id: string
+          position: number
+          user_id: string
+        }
+        Insert: {
+          card_id: string
+          content: string
+          created_at?: string
+          done?: boolean
+          id?: string
+          position?: number
+          user_id: string
+        }
+        Update: {
+          card_id?: string
+          content?: string
+          created_at?: string
+          done?: boolean
+          id?: string
+          position?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "checklist_items_card_id_fkey"
+            columns: ["card_id"]
+            isOneToOne: false
+            referencedRelation: "cards"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      comments: {
+        Row: {
+          body: string
+          card_id: string
+          created_at: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          body: string
+          card_id: string
+          created_at?: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          body?: string
+          card_id?: string
+          created_at?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "comments_card_id_fkey"
+            columns: ["card_id"]
+            isOneToOne: false
+            referencedRelation: "cards"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      labels: {
+        Row: {
+          board_id: string
+          color: string
+          created_at: string
+          id: string
+          name: string
+          user_id: string
+        }
+        Insert: {
+          board_id: string
+          color?: string
+          created_at?: string
+          id?: string
+          name: string
+          user_id: string
+        }
+        Update: {
+          board_id?: string
+          color?: string
+          created_at?: string
+          id?: string
+          name?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "labels_board_id_fkey"
+            columns: ["board_id"]
+            isOneToOne: false
+            referencedRelation: "boards"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          display_name: string | null
+          id: string
+        }
+        Insert: {
+          created_at?: string
+          display_name?: string | null
+          id: string
+        }
+        Update: {
+          created_at?: string
+          display_name?: string | null
+          id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +332,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      card_priority: "low" | "medium" | "high" | "urgent"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +459,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      card_priority: ["low", "medium", "high", "urgent"],
+    },
   },
 } as const
