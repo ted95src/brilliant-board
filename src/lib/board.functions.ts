@@ -303,7 +303,7 @@ export const updateCard = createServerFn({ method: "POST" })
     if (typeof data.description === "string") patch["description"] = data.description;
     if (data.priority) patch["priority"] = data.priority;
     if (data.dueDate !== undefined) patch["due_date"] = data.dueDate;
-    fail((await context.supabase.from("cards").update(patch).eq("id", data.cardId)).error);
+    fail((await context.supabase.from("cards").update(patch as never).eq("id", data.cardId)).error);
     return { ok: true };
   });
 
@@ -439,7 +439,7 @@ export const setChecklistItem = createServerFn({ method: "POST" })
     if (typeof data.done === "boolean") patch["done"] = data.done;
     if (typeof data.content === "string") patch["content"] = data.content;
     if (Object.keys(patch).length) {
-      fail((await context.supabase.from("checklist_items").update(patch).eq("id", data.itemId)).error);
+      fail((await context.supabase.from("checklist_items").update(patch as never).eq("id", data.itemId)).error);
     }
     return { ok: true };
   });
